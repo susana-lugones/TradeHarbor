@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('./models/userSchema')
 
@@ -14,10 +14,8 @@ const app = express()
 // connect to mongodb
 
 const mongo_url = 'mongodb+srv://root:root@cluster30.tmgevxw.mongodb.net/UsersDB?retryWrites=true&w=majority'
-mongoose.connect(mongo_url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
+mongoose.connect(mongo_url)
+.then(() => {
     console.log('Connected to MongoDB')
     app.listen(8000, () => {
         console.log('Server is running on port 8000')
