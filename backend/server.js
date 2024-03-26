@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const User = require('./models/userSchema')
 
 const SECRET_KEY = "secretkey"
+const REFRESH_SECRET_KEY = "refreshsecretkey"
 
 // connect to express app
 const app = express()
@@ -28,6 +29,18 @@ mongoose.connect(mongo_url)
 
 app.use(bodyParser.json())
 app.use(cors())
+app.use(express.json())
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) return res.sendStatus(403)
+        req.user = user
+        next()
+    })
+}
 
 // routes => CRUD API
 
@@ -64,10 +77,19 @@ app.post('/login', async (req, res) => {
             return res.status(400).json({error: "Invalid Password"})
         }
         const token = jwt.sign({ userId: user._id}, SECRET_KEY, {expiresIn: '1h'})
-        res.json({ message: 'Login successful', token})
+        const refreshToken = jwt.sign({ userId: user._id}, REFRESH_SECRET_KEY)
+        res.json({ message: 'Login successful', token: token, refreshToken: refreshToken})
     } catch (error) {
         res.status(500).json({error: "Error logging in", error})
     }
 })
 
+app.get('/accountinfo', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId)
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({error: "Error getting user"})
+    }
+})
 
