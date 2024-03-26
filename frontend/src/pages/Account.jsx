@@ -57,11 +57,14 @@ const Account = () => {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
+    }).then((response) => {
+      fetchAccount()
+      window.location.reload()
+      setUserButtonClicked(false)
+      setUsernameInput('')
     })
-    fetchAccount()
-    window.location.reload()
-    setUserButtonClicked(false)
-    setUsernameInput('')
+    
+    
   }
 
   const handleEmailChange = (event) => {
@@ -78,11 +81,12 @@ const Account = () => {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
+    }).then((response) => {
+      fetchAccount()
+      window.location.reload()
+      setEmailButtonClicked(false)
+      setEmailInput('')
     })
-    fetchAccount()
-    window.location.reload()
-    setEmailButtonClicked(false)
-    setEmailInput('')
   }
 
   const handlePasswordChange = (event) => {
@@ -121,7 +125,7 @@ const Account = () => {
   }, [])
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-[#1a1a1a] text-white">
+    <div className="flex flex-grow w-full items-center justify-center bg-[#1a1a1a] text-white">
       <div className="flex h-[] w-[300px] flex-col rounded-lg bg-zinc-700">
         <div className="flex flex-col items-start p-3">
           <h2 className="pb-[8px] text-3xl font-semibold">ACCOUNT</h2>

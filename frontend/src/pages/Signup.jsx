@@ -43,7 +43,7 @@ const Signup = () => {
     }
 
     return (
-        <div className='w-full h-screen flex'>
+        <div className='w-full flex-grow flex'>
             <div className='w-[50%] h-[100%] bg-[#1a1a1a] text-white flex justify-center items-center'>
                 <form className='text-center bg-teal-700 border rounded-lg w-[500px] h-[400px] p-9'
                 onSubmit={handleRegister}>
