@@ -30,6 +30,7 @@ mongoose.connect(mongo_url)
 app.use(bodyParser.json())
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -93,3 +94,47 @@ app.get('/accountinfo', authenticateToken, async (req, res) => {
     }
 })
 
+app.patch('/editusername', authenticateToken, async (req, res) => {
+    try {
+        const { username } = req.body
+        const user = await User.findById(req.user.userId)
+        user.username = username
+        await user.save()
+        res.status(200).json({message: 'Username updated successfully', username: username})
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+})
+
+app.patch('/editemail', authenticateToken, async (req, res) => {
+    try {
+        const { email } = req.body
+        const user = await User.findById(req.user.userId)
+        user.email = email
+        await user.save()
+        res.status(200).json({message: 'Email updated successfully', email: email})
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+})
+
+app.patch('/editpassword', authenticateToken, async (req, res) => {
+    try {
+        const { password } = req.body
+        const user = await User.findById(req.user.userId)
+        user.password = await bcrypt.hash(password, 10)
+        await user.save()
+        res.status(200).json({message: 'Password updated successfully'})
+    } catch (error) {
+        res.status(500).json({error: "Error updating password"})
+    }
+})
+
+app.delete('/deleteaccount', authenticateToken, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user.userId)
+        res.status(200).json({message: 'Account deleted successfully'})
+    } catch (error) {
+        res.status(500).json({error: "Error deleting account"})
+    }
+})
