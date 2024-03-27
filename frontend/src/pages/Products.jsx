@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Products = () => {
-
+  // Dummy product list
   const productList = [
     {
       _id: '1',
