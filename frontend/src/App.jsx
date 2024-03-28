@@ -7,6 +7,7 @@ import Signup from './pages/Signup'
 import Account from './pages/Account'
 import Products from './pages/Products'
 import Product from './pages/Product'
+import CreateProduct from './pages/CreateProduct'
 import About from './pages/About'
 import Footer from './components/Footer'
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         {isUserSignedIn && <Route path="/account" element={<Account />} />}
         <Route path="/products" element={<Products />} />
+        {isUserSignedIn && <Route path="/createproduct" element={<CreateProduct />} />}
         <Route path="/product/:id" element={<Product />} />
         <Route path="/about" element={<About />} />
       </Routes>
