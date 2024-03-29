@@ -27,24 +27,24 @@ const Login = () => {
 
     return (
         <div className='w-full flex-grow flex'>
-            <div className='w-[50%] h-[100%] bg-[#1a1a1a] text-white flex justify-center items-center'>
-                <form className='text-center bg-teal-700 border rounded-lg w-[500px] h-[400px] p-9'
+            <div className='w-[50%] h-[100%] bg-[#ececec] text-gray-800 flex justify-center items-center'>
+                <form className='text-center bg-teal-500 border rounded-lg w-[400px] h-[400px] p-9'
                     onSubmit={handleLogin}>
                     
                     <label>Username</label>
                     <br />
-                    <input type='text' className='w-[400px] h-[40px] border rounded-xl bg-zinc-700 p-2' placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type='text' className='w-[80%] h-[40px] border rounded-xl bg-zinc-200 p-2' placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
                     <br />
                     <br />
                     <label>Password</label>
                     <br />
-                    <input type='password' className='w-[400px] h-[40px] border rounded-xl bg-zinc-700 p-2' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type='password' className='w-[80%] h-[40px] border rounded-xl bg-zinc-200 p-2' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                     <br />
                     <br />
-                    <button type='submit' className='w-[200px] h-[50px] bg-[#1a1a1a] border rounded-lg hover:bg-zinc-700'>Login</button>
+                    <button type='submit' className='w-[50%] h-[50px] bg-[#ececec] border rounded-lg hover:bg-zinc-200'>Login</button>
                 </form>
             </div>
-            <div className='w-[50%] h-[100%] flex justify-center items-center bg-teal-700'>
+            <div className='w-[50%] h-[100%] flex justify-center items-center bg-teal-500'>
                 <h2 className='text-3xl text-white'>Login</h2>
             </div>
         </div>

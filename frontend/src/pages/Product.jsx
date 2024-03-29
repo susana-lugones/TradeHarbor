@@ -5,7 +5,7 @@ const Product = () => {
   const { id } = useParams()
 
   return (
-    <div className='flex flex-grow bg-[#1a1a1a] text-white'>Product { id }</div>
+    <div className='flex flex-grow bg-[#ececec] text-gray-800'>Product { id }</div>
   )
 }
 

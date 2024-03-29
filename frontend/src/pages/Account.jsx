@@ -125,36 +125,36 @@ const Account = () => {
   }, [])
 
   return (
-    <div className="flex flex-grow w-full items-center justify-center bg-[#1a1a1a] text-white">
-      <div className="flex h-[] w-[300px] flex-col rounded-lg bg-zinc-700">
+    <div className="flex flex-grow w-full items-center justify-center bg-[#ececec] text-gray-800">
+      <div className="flex h-[] w-[300px] flex-col rounded-lg bg-teal-500">
         <div className="flex flex-col items-start p-3">
           <h2 className="pb-[8px] text-3xl font-semibold">ACCOUNT</h2>
           <h2 className="pb-[8px]">Username: {username}</h2>
           <h2 className="pb-[8px]">Email: {email}</h2>
         </div>
         <div className="flex flex-col items-start p-2 pb-3">
-          <button onClick={handleUserClick} className="m-1 rounded-md bg-teal-600 p-1">Edit Username</button>
-          <button onClick={handleEmailClick} className="m-1 rounded-md bg-teal-600 p-1">Edit Email</button>
-          <button onClick={handlePasswordClick} className="m-1 rounded-md bg-teal-600 p-1">Change Password</button>
+          <button onClick={handleUserClick} className="m-1 rounded-md bg-zinc-200 p-1">Edit Username</button>
+          <button onClick={handleEmailClick} className="m-1 rounded-md bg-zinc-200 p-1">Edit Email</button>
+          <button onClick={handlePasswordClick} className="m-1 rounded-md bg-zinc-200 p-1">Change Password</button>
           <button className="m-1 rounded-md bg-red-600 p-1" onClick={handleDeleteAccount}>Delete Account</button>
         </div>
         <div className="flex flex-col items-start">
           {userButtonClicked ? (<>
             <div className='w-[300px] h-[2px] bg-white mb-1'></div>
-            <input type="text" placeholder='New Username' value={usernameInput} onChange={handleUserChange} className="m-2 rounded-md bg-zinc-600 p-1" />
-            <button onClick={handleUserSubmit} className="rounded-md bg-teal-600 m-2 px-1.5 py-1">Submit</button>
+            <input type="text" placeholder='New Username' value={usernameInput} onChange={handleUserChange} className="m-2 rounded-md bg-zinc-200 p-1" />
+            <button onClick={handleUserSubmit} className="rounded-md bg-zinc-200 m-2 px-1.5 py-1">Submit</button>
           </>) : null
           }
           {emailButtonClicked ? (<>
             <div className='w-[300px] h-[2px] bg-white mb-1'></div>
-            <input type="text" placeholder='New Email' value={emailInput} onChange={handleEmailChange} className="m-2 rounded-md bg-zinc-600 p-1" />
-            <button onClick={handleEmailSubmit} className="rounded-md bg-teal-600 px-1.5 py-1 m-2">Submit</button>
+            <input type="text" placeholder='New Email' value={emailInput} onChange={handleEmailChange} className="m-2 rounded-md bg-zinc-200 p-1" />
+            <button onClick={handleEmailSubmit} className="rounded-md bg-zinc-200 px-1.5 py-1 m-2">Submit</button>
           </>) : null
           }
           {passwordButtonClicked ? (<>
             <div className='w-[300px] h-[2px] bg-white mb-1'></div>
-            <input type="password" placeholder='New Password' value={passwordInput} onChange={handlePasswordChange} className="m-2 rounded-md bg-zinc-600 p-1" />
-            <button onClick={handlePasswordSubmit} className="rounded-md bg-teal-600 px-1.5 py-1 m-2">Submit</button>
+            <input type="password" placeholder='New Password' value={passwordInput} onChange={handlePasswordChange} className="m-2 rounded-md bg-zinc-200 p-1" />
+            <button onClick={handlePasswordSubmit} className="rounded-md bg-zinc-200 px-1.5 py-1 m-2">Submit</button>
           </>) : null
           }
         </div>

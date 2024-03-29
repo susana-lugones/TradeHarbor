@@ -51,7 +51,7 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         const newUser = new User({email, username, password: hashedPassword})
         await newUser.save()
-        res.status(201).json({message: 'User created successfully'})
+        res.status(201).json({message: 'New account created successfully'})
     } catch (error) {
         res.status(500).json({error: "Error Signing Up"})
     }
@@ -79,7 +79,7 @@ app.post('/login', async (req, res) => {
         }
         const token = jwt.sign({ userId: user._id}, SECRET_KEY, {expiresIn: '1h'})
         const refreshToken = jwt.sign({ userId: user._id}, REFRESH_SECRET_KEY)
-        res.json({ message: 'Login successful', token: token, refreshToken: refreshToken})
+        res.json({ message: 'Successful login', token: token, refreshToken: refreshToken})
     } catch (error) {
         res.status(500).json({error: "Error logging in", error})
     }

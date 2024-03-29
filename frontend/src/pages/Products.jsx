@@ -31,7 +31,7 @@ const Products = () => {
     }]
 
   return (
-    <div className='flex flex-grow w-full justify-center items-center bg-[#1a1a1a] text-white'>
+    <div className='flex flex-grow w-full justify-center items-center bg-[#ececec] text-gray-800'>
       <div className='grid grid-cols-3 gap-4'>
         {productList.map((product) => (
           <div key={product._id} >
