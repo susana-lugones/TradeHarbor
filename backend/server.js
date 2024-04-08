@@ -138,3 +138,14 @@ app.delete('/deleteaccount', authenticateToken, async (req, res) => {
         res.status(500).json({error: "Error deleting account"})
     }
 })
+
+app.post('/createproduct', authenticateToken, async (req, res) => {
+    try {
+        const { name, description, image_url, price_range } = req.body
+        const newProduct = new Product({ name, description, owner: req.user.userId, image_url, price_range })
+        await newProduct.save()
+        res.status(201).json({message: 'Product created successfully'})
+    } catch (error) {
+        res.status(500).json({error: "Error creating product"})
+    }
+})
