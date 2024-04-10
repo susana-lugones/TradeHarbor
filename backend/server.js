@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('./models/userSchema')
+const Product = require('./models/productSchema')
 
 const SECRET_KEY = "secretkey"
 const REFRESH_SECRET_KEY = "refreshsecretkey"
@@ -139,13 +140,44 @@ app.delete('/deleteaccount', authenticateToken, async (req, res) => {
     }
 })
 
-app.post('/createproduct', authenticateToken, async (req, res) => {
+app.post('/newproduct', async (req, res) => {
     try {
         const { name, description, image_url, price_range } = req.body
-        const newProduct = new Product({ name, description, owner: req.user.userId, image_url, price_range })
+
+        const token = req.headers['authorization'].split(' ')[1]
+        const debug = jwt.verify(token, SECRET_KEY).userId
+        
+        const newProduct = new Product({ name, description, owner: debug, image_url, price_range })
         await newProduct.save()
         res.status(201).json({message: 'Product created successfully'})
     } catch (error) {
         res.status(500).json({error: "Error creating product"})
+    }
+})
+
+app.get('/allproducts', async (req, res) => {
+    try {
+        const products = await Product.find()
+        res.status(200).json(products)
+    } catch (error) {
+        res.status(500).json({error: "Error getting products"})
+    }
+})
+
+app.get('/product/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id)
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).json({error: "Error getting product"})
+    }
+})
+
+app.get('/owner/:id', async (req, res) => {
+    try {
+        const owner = await User.findById(req.params.id)
+        res.status(200).json(owner)
+    } catch (error) {
+        res.status(500).json({error: "Error getting owner"})
     }
 })

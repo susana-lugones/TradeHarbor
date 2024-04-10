@@ -1,34 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Products = () => {
   // Dummy product list
-  const productList = [
-    {
-      _id: '1',
-      name: 'Product 1',
-      image: 'https://source.unsplash.com/random/200x200',
-    },
-    {
-      _id: '2',
-      name: 'Product 2',
-      image: 'https://source.unsplash.com/random/200x200',
-    },
-    {
-      _id: '3',
-      name: 'Product 3',
-      image: 'https://source.unsplash.com/random/200x200',
-    },
-    {
-      _id: '4',
-      name: 'Product 4',
-      image: 'https://source.unsplash.com/random/200x200',
-    },
-    {
-      _id: '5',
-      name: 'Product 5',
-      image: 'https://source.unsplash.com/random/200x200',
-    }]
+  const [productList, setProductList] = useState([])
+
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:8000/allproducts')
+      setProductList(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
 
   return (
     <div className='flex flex-grow w-full justify-center items-center bg-[#ececec] text-gray-800'>
@@ -36,11 +25,12 @@ const Products = () => {
         {productList.map((product) => (
           <div key={product._id} >
             <Link to={`/product/${product._id}`}>
-              <img
+              {/* <img
                 src={product.image}
                 alt={product.name}
                 className='w-[200px] h-[200px] object-cover'
-              />
+              /> */}
+              <p>{product.image_url}</p>
               {product.name}</Link>
           </div>
         ))}
