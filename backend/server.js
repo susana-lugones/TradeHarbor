@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('./models/userSchema')
 const Product = require('./models/productSchema')
+const Message = require('./models/messageSchema')
+const Conversation = require('./models/conversationSchema')
 
 const SECRET_KEY = "secretkey"
 const REFRESH_SECRET_KEY = "refreshsecretkey"
@@ -179,5 +181,76 @@ app.get('/owner/:id', async (req, res) => {
         res.status(200).json(owner)
     } catch (error) {
         res.status(500).json({error: "Error getting owner"})
+    }
+})
+
+// Send Message Endpoint
+
+app.post('/sendmessage/:id', authenticateToken, async (req, res) => {
+    try {
+        const { message } = req.body
+        const { id:receiverId } = req.params
+        const senderId = req.user.userId
+
+        let conversation = await Conversation.findOne ({
+            participants: { $all: [senderId, receiverId] }
+        })
+
+        if (!conversation) {
+            conversation = await Conversation.create({
+                participants: [senderId, receiverId]
+            })
+        }
+
+        const newMessage = new Message({
+            senderId,
+            receiverId,
+            message,
+        })
+
+        if (newMessage) {
+            conversation.messages.push(newMessage._id)
+        }
+
+        await Promise.all([newMessage.save(), conversation.save()])
+
+        res.status(201).json(newMessage)
+
+    } catch (error) {
+        console.log("error in sendMessage")
+        res.status(500).json({error: "Error sending message"})
+    }
+})
+
+app.get('/getmessages/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id:userToChatId } = req.params
+        const user = req.user.userId
+        const conversation = await Conversation.findOne({
+            participants: { $all: [user, userToChatId] }
+        }).populate('messages')
+
+        if (!conversation) {
+            return res.status(200).json([])
+        }
+
+        const messages = conversation.messages
+
+        res.status(200).json(messages)
+        
+    } catch (error) {
+        console.log("error in getMessages")
+        res.status(500).json({error: "Error getting messages"})
+    }
+})
+
+app.get('/users/sidebar', authenticateToken, async (req, res) => {
+    try {
+        const loggedInUser = req.user.userId;
+        const allUsers = await User.find({ _id: { $ne: loggedInUser } }).select('-password');
+
+    } catch (error) {
+        console.log("error in getSidebar")
+        res.status(500).json({error: "Error getting users"})
     }
 })

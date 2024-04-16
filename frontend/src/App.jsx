@@ -9,6 +9,7 @@ import Products from './pages/Products'
 import Product from './pages/Product'
 import CreateProduct from './pages/CreateProduct'
 import About from './pages/About'
+import Chat from './pages/Chat'
 import Footer from './components/Footer'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         {isUserSignedIn && <Route path="/createproduct" element={<CreateProduct />} />}
         <Route path="/product/:id" element={<Product />} />
         <Route path="/about" element={<About />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
       <Footer />
     </div>
