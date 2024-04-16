@@ -1,14 +1,17 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CiSquarePlus } from 'react-icons/ci'
+import useConversation from '../zustand/useConversation'
 
 const Navbar = () => {
 
     const navigate = useNavigate()
     const isUserSignedIn = !!localStorage.getItem('token')
+    const { setSelectedConversation } = useConversation()
 
     const handleSignout = () => {
         localStorage.removeItem('token')
+        setSelectedConversation(null)
         navigate('/login')
     }
 
