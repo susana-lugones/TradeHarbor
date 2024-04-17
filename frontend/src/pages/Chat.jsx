@@ -5,10 +5,11 @@ import ChatWindow from '../components/ChatWindow'
 const Chat = () => {
   return (
     <div className='flex flex-grow items-center justify-center'>
-        <div className='border-gray-600 border flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-[#ececec] bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-            <Sidebar />
-            <ChatWindow />
-        </div>
+        {!localStorage.getItem('token') ? <h1 className='text-2xl'>Unauthorized: Please Login</h1> : 
+        (<div className='border-gray-600 border flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-[#ececec] bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
+        <Sidebar />
+        <ChatWindow />
+    </div>)}
     </div>
   )
 }

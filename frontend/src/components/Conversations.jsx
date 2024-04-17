@@ -11,8 +11,8 @@ const Conversations = () => {
   const getConversations = async () => {
     setLoading(true)
     try {
-      const res = await axios.get('http://localhost:8000/users/sidebar')
-      const data = res.json()
+      const res = await axios.get('http://localhost:8000/users/sidebar', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+      const data = await res.data
       if (data.error) {
         throw new Error(data.error)
       }
@@ -31,9 +31,9 @@ const Conversations = () => {
 
   return (
     <div className='py-2 flex flex-col overflow-auto'>
-      {conversations.map((conversation) => (
+      {conversations.map((conversation, idx) => (
         <Conversation 
-          key={conversation.id}
+          key={conversation._id}
           conversation={conversation}
           lastIdx={idx === conversations.length - 1} 
         />

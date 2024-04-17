@@ -38,7 +38,7 @@ app.use(express.urlencoded({extended: false}))
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.sendStatus(401)
+    if (token == null) return res.sendStatus(401).json("No token")
     jwt.verify(token, SECRET_KEY, (err, user) => {
         if (err) return res.sendStatus(403)
         req.user = user
@@ -169,6 +169,8 @@ app.get('/allproducts', async (req, res) => {
 app.get('/product/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
+        const owner = await User.findById(product.owner);
+        product.owner = owner;
         res.status(200).json(product)
     } catch (error) {
         res.status(500).json({error: "Error getting product"})
@@ -191,6 +193,7 @@ app.post('/sendmessage/:id', authenticateToken, async (req, res) => {
         const { message } = req.body
         const { id:receiverId } = req.params
         const senderId = req.user.userId
+        console.log(senderId)
 
         let conversation = await Conversation.findOne ({
             participants: { $all: [senderId, receiverId] }
@@ -247,10 +250,32 @@ app.get('/getmessages/:id', authenticateToken, async (req, res) => {
 app.get('/users/sidebar', authenticateToken, async (req, res) => {
     try {
         const loggedInUser = req.user.userId;
-        const allUsers = await User.find({ _id: { $ne: loggedInUser } }).select('-password');
-
+        const allConversations = await Conversation.find({ participants: loggedInUser }).select('participants -_id');
+        const allConversationIds = allConversations.map(conversation => conversation.participants).flat();
+        const allUsers = await User.find({ _id: { $in: allConversationIds, $ne: loggedInUser } }).select('-password');
+        res.status(200).json(allUsers);
+        // const allConversationIds = allConversations.map(conversation => conversation.participants);
+        // const allUsers = await User.find({ _id: { $in: allConversationIds, $ne: loggedInUser } }).select('-password')
+        // res.status(200).json(allConversations)
     } catch (error) {
         console.log("error in getSidebar")
         res.status(500).json({error: "Error getting users"})
+    }
+})
+
+app.post('/conversation/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id:receiverId } = req.params
+        const senderId = req.user.userId
+        const conversation = await new Conversation({
+            participants: [senderId, receiverId]
+        })
+
+        await conversation.save()
+        res.status(201).json(conversation)
+        
+    } catch (error) {
+        console.log("error in createConversation")
+        res.status(500).json({error: "Error creating conversation"})
     }
 })
