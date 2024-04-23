@@ -5,4 +5,3 @@ An innovative e-commerce platform where users can seamlessly engage in bartering
 - Charles Cone
 - Oscar Camargo
 - Susana Lugones
-- Lia Ranon
