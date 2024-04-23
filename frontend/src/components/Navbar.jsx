@@ -23,6 +23,7 @@ const Navbar = () => {
                 { isUserSignedIn ? (
                     <>
                     <Link to='/account'><li>Account</li></Link>
+                    <Link to='/chat'><li>Chat</li></Link>
                     <li><button onClick={handleSignout}>Sign Out</button></li>
                     <Link to='/createproduct'><CiSquarePlus className='text-3xl'/></Link>
                     </>

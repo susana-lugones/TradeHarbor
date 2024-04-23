@@ -25,12 +25,12 @@ const Products = () => {
         {productList.map((product) => (
           <div key={product._id} >
             <Link to={`/product/${product._id}`}>
-              {/* <img
-                src={product.image}
+              <img
+                src={product.image_url}
                 alt={product.name}
-                className='w-[200px] h-[200px] object-cover'
-              /> */}
-              <p>{product.image_url}</p>
+                className='w-[300px] h-[300px] object-cover'
+              />
+              {/* <p>{product.image_url}</p> */}
               {product.name}</Link>
           </div>
         ))}

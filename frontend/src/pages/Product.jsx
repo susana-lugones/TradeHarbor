@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import useConversation from '../zustand/useConversation'
+import ProductDropdown from '../components/ProductDropdown'
 
 const Product = () => {
   const { id } = useParams()
   const [product, setProduct] = useState({})
+  const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const [loggedInUser, setLoggedInUser] = useState(null)
 
   const navigate = useNavigate()
-  const { selectedConversation, setSelectedConversation } = useConversation()
 
-  
-  const createConversation = async () => {
+
+  const sendMessage = async (message) => {
+    setLoading(true)
+
     try {
-      if (product.owner) {
-        console.log('Creating conversation with owner id:', product.owner._id)
-        console.log('Token:', localStorage.getItem('token'))
-        const { data } = await axios.post(`http://localhost:8000/conversation/${product.owner._id}`,
-          {},
-          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-        )
-  
-        console.log('Conversation created:', data)
-        await setSelectedConversation(data)
-        console.log('Selected conversation:', selectedConversation)
-        navigate('/chat', { state: { conversation: data }})
-      } else {
-        console.log('Product has no owner')
+      const res = await axios.post(`http://localhost:8000/sendmessage/${product.owner._id}`, { message }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+      const data = await res.data
+      if (data.error) {
+        throw new Error(data.error)
       }
+      setMessages([...messages, data])
     } catch (error) {
-      console.log('Error creating conversation:', error.response)
+      console.error(error)
+    } finally {
+      setLoading(false)
+      navigate('/chat')
     }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!message) return
+    await sendMessage(message)
+    setMessage('')
   }
 
   const fetchProduct = async () => {
@@ -48,7 +51,18 @@ const Product = () => {
   }
 
   useEffect(() => {
+    const getLoggedInUser = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/accountinfo', {
+          headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+        await setLoggedInUser(response.data._id)
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
     fetchProduct()
+    getLoggedInUser()
   }, [id])
 
   return (
@@ -63,14 +77,18 @@ const Product = () => {
             <img
               src={product.image_url}
               alt={product.name}
-              className='w-[200px] h-[200px] object-cover'
+              className='w-auto h-auto object-cover'
             />
             <h1 className='text-3xl font-semibold'>{product.name}</h1>
             <p className='text-sm'>{product.description}</p>
-            <p className='text-sm'>{product.owner ? product.owner.username : ''} {'<- owner'}</p>
+            <Link to={`/user/${product.owner ? product.owner._id : ''}`}><p className='text-sm'>{product.owner ? product.owner.username : ''}</p></Link>
             <p className='text-lg font-semibold'>${product.price_range}</p>
-            {localStorage.getItem('token') && (
-              <button onClick={createConversation} className='bg-teal-500 text-white rounded-md p-2 mt-2'>Message Seller</button>
+            {localStorage.getItem('token') && product.owner && product.owner._id !== loggedInUser && (
+              <>
+                <textarea className='p-2 bg-zinc-200 rounded-lg' placeholder='Send a Message...' onChange={(e) => setMessage(e.target.value)} value={message} />
+                <button onClick={handleSubmit} className='bg-teal-500 text-white rounded-md p-2 mt-2'>Message Seller</button>
+                <ProductDropdown offeredProduct={product} />
+              </>
             )}
             <Link to='/products' className='absolute bottom-20 text-gray-800 bg-teal-500 rounded-md p-2'>Back to Products</Link>
           </div>

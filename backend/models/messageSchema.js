@@ -14,8 +14,11 @@ const messageSchema = new mongoose.Schema({
     message: {
         type: String,
         required: true
+    },
+    offer: {
+        type: Boolean,
+        default: false
     }
-    // Created At, Updated At Fields in Fronted message.CreatedAT, message.UpdatedAt
 }, {timestamps: true})
 
 const Message = mongoose.model('Message', messageSchema)

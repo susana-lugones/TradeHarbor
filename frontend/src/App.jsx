@@ -10,6 +10,7 @@ import Product from './pages/Product'
 import CreateProduct from './pages/CreateProduct'
 import About from './pages/About'
 import Chat from './pages/Chat'
+import User from './pages/User'
 import Footer from './components/Footer'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/about" element={<About />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/user/:id" element={<User />} />
       </Routes>
       <Footer />
     </div>

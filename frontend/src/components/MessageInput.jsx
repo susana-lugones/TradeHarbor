@@ -14,7 +14,7 @@ const MessageInput = () => {
         setLoading(true)
 
         try {
-            const res = await axios.post(`http://localhost:8000/sendmessage/${selectedConversation._id}`, {message}, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+            const res = await axios.post(`http://localhost:8000/sendmessage/${selectedConversation._id}`, {'message':message, 'offer': false}, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
             const data = await res.data
             if (data.error) {
                 throw new Error(data.error)

@@ -8,6 +8,7 @@ const User = require('./models/userSchema')
 const Product = require('./models/productSchema')
 const Message = require('./models/messageSchema')
 const Conversation = require('./models/conversationSchema')
+const Offer = require('./models/offerSchema')
 
 const SECRET_KEY = "secretkey"
 const REFRESH_SECRET_KEY = "refreshsecretkey"
@@ -91,9 +92,20 @@ app.post('/login', async (req, res) => {
 app.get('/accountinfo', authenticateToken, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId)
+        // console.log(user)
         res.status(200).json(user)
     } catch (error) {
         res.status(500).json({error: "Error getting user"})
+    }
+})
+
+app.get('/account/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findById(id)
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json(`Error getting Account ${id}`)
     }
 })
 
@@ -173,6 +185,7 @@ app.get('/product/:id', async (req, res) => {
         product.owner = owner;
         res.status(200).json(product)
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({error: "Error getting product"})
     }
 })
@@ -190,10 +203,9 @@ app.get('/owner/:id', async (req, res) => {
 
 app.post('/sendmessage/:id', authenticateToken, async (req, res) => {
     try {
-        const { message } = req.body
+        const { message, offer } = req.body
         const { id:receiverId } = req.params
         const senderId = req.user.userId
-        console.log(senderId)
 
         let conversation = await Conversation.findOne ({
             participants: { $all: [senderId, receiverId] }
@@ -209,6 +221,7 @@ app.post('/sendmessage/:id', authenticateToken, async (req, res) => {
             senderId,
             receiverId,
             message,
+            offer
         })
 
         if (newMessage) {
@@ -254,28 +267,135 @@ app.get('/users/sidebar', authenticateToken, async (req, res) => {
         const allConversationIds = allConversations.map(conversation => conversation.participants).flat();
         const allUsers = await User.find({ _id: { $in: allConversationIds, $ne: loggedInUser } }).select('-password');
         res.status(200).json(allUsers);
-        // const allConversationIds = allConversations.map(conversation => conversation.participants);
-        // const allUsers = await User.find({ _id: { $in: allConversationIds, $ne: loggedInUser } }).select('-password')
-        // res.status(200).json(allConversations)
     } catch (error) {
         console.log("error in getSidebar")
         res.status(500).json({error: "Error getting users"})
     }
 })
 
-app.post('/conversation/:id', authenticateToken, async (req, res) => {
+app.put('/rate/:id/', authenticateToken, async (req, res) => {
     try {
+        const { rating } = req.body
+        const { id:userId } = req.params
+        const user = await User.findById(userId)
+        user.ratings.push({rating})
+        user.totalRating = (user.totalRating * ((user.ratings.length - 1) / user.ratings.length)) + (rating / user.ratings.length)
+        await user.save()
+        res.status(200).json({message: 'Rating updated successfully'})
+    } catch (error) {
+        res.status(500).json({error: "Error updating rating"})
+    }
+})
+
+app.get('/user/products', authenticateToken, async (req, res) => {
+    try {
+        const products = await Product.find({ owner: req.user.userId })
+        res.status(200).json(products)
+    } catch (error) {
+        res.status(500).json({error: "Error getting products"})
+    }
+})
+
+app.get('/user/:id/products', async (req, res) => {
+    try {
+        const { id:userId } = req.params
+        const products = await Product.find({ owner: userId })
+        res.status(200).json(products)
+    } catch (error) {
+        res.status(500).json({error: "Error getting products"})
+    }
+})
+
+app.delete('/delete/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params
+        await Product.findByIdAndDelete(id)
+        res.status(200).json({message: 'Product deleted successfully'})
+    } catch (error) {
+        res.status(500).json({error: "Error deleting product"})
+
+    }
+})
+
+app.post('/createoffer/:id', authenticateToken, async (req, res) => {
+    try {
+        const { products, messageId } = req.body
         const { id:receiverId } = req.params
         const senderId = req.user.userId
-        const conversation = await new Conversation({
-            participants: [senderId, receiverId]
+
+        const newOffer = new Offer({
+            senderId,
+            receiverId,
+            products, 
+            messageId
         })
 
-        await conversation.save()
-        res.status(201).json(conversation)
-        
+        await newOffer.save()
+        res.status(201).json({message: 'Offer created successfully'})
     } catch (error) {
-        console.log("error in createConversation")
-        res.status(500).json({error: "Error creating conversation"})
+        res.status(500).json({error: "Error creating offer"})
+    }
+})
+
+app.get('/getoffers', authenticateToken, async (req, res) => {
+    try {
+        const offers = await Offer.find({ $or: [{ receiverId: req.user.userId }, { senderId: req.user.userId }] })
+        res.status(200).json(offers)
+    } catch (error) {
+        res.status(500).json({error: "Error getting offers"})
+    }
+})
+
+app.delete('/acceptoffer/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id:messageId } = req.params
+        const offer = await Offer.findOne({ messageId })
+        console.log(offer)
+        if (offer) {
+
+            await Product.deleteMany({ _id: { $in: offer.products } })
+
+            await Offer.deleteOne(offer._id)
+
+            res.status(200).json({ message: 'Offer accepted' });
+        } else {
+            res.status(404).json({ error: 'Offer not found' });
+        }
+
+    } catch (error) {
+        console.log("error in acceptOffer: ", error.message)
+        res.status(500).json({error: "Error accepting offer"})
+    }
+})
+
+app.delete('/declineoffer/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id:messageId } = req.params
+        const offer = await Offer.findOne({ messageId })
+
+        if (offer) {
+            await offer.remove();
+            res.status(200).json({ message: 'Offer declined' });
+        } else {
+            res.status(404).json({ error: 'Offer not found' });
+        }
+    } catch (error) {
+        console.log("error in declineOffer")
+        res.status(500).json({error: "Error declining offer"})
+    }
+})
+
+app.put('/updatemessage/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id:messageId } = req.params
+        const { offer } = req.body
+        const updatedMessage = await Message.findOneAndUpdate(
+            { _id: messageId },
+            { $set: { offer } },
+            { new: true }  // This option returns the updated document
+        )
+        res.status(200).json(updatedMessage)
+    } catch (error) {
+        res.status(500).json({error: "Error updating message"})
     }
 })
