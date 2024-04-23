@@ -1,0 +1,47 @@
+.testimonials-container {
+    width: 80%;
+    margin: 40px auto;
+    text-align: center;
+  }
+  
+  .carousel {
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  
+  .carousel-inner {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .testimonial {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .testimonial p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .testimonial small {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  button {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #025f99;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
