@@ -11,6 +11,9 @@ import ContactUs from './Pages/ContactUs';
 import FAQ from './Pages/FAQ';
 import AboutUs from './Pages/AboutUs';
 import Testimonials from './Pages/Testimonials';
+import React from 'react'
+import new_collection from './Components/Assets/new_collections'
+import Item from './Components/Item/Item'
 
 function App() {
   return (
@@ -46,7 +49,7 @@ function App() {
 function Explore() {
   return (
     <div>
-      <h1>Explore</h1>
+      <h1>Recent Searches</h1>
       <ul>
         <li><a href="/mens">Men</a></li>
         <li><a href="/womens">Women</a></li>
@@ -65,6 +68,15 @@ function Explore() {
         <Route path='/skirts' element={<ShopCategory category="skirts"/>}/>
         <Route path='/shoes' element={<ShopCategory category="shoes"/>}/>
       </Routes>
+      <div className='new-collections'>
+        <h1>Explore All Categories</h1>
+        <hr />
+        <div className="collections">
+        {new_collection.map((item,i)=>{
+                return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={item.new_price} old_price={item.old_price}/>
+            })}
+        </div>
+    </div>
     </div>
   );
 }
