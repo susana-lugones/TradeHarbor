@@ -1,6 +1,6 @@
 # CEN3031 Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created with MongoDB, ExpressJS, React(Vite), Node.js, and TailwindCSS
 
 ## Team 118
 - Oscar Camargo
