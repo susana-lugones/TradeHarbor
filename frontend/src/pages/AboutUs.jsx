@@ -2,6 +2,9 @@ import React from 'react';
 import './CSS/AboutUs.css';
 
 const AboutUs = () => {
+  /**
+   * Just a hard coded page with information about the project
+   */
   return (
     <div className="about-container">
       <div className="about-header">

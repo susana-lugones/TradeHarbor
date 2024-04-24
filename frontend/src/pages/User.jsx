@@ -3,15 +3,20 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const User = () => {
+
+    // The id of the user is taken from the URL
     const { id } = useParams()
+    // States used for rendering the user's information and products and reviews
     const [user, setUser] = useState({})
     const [products, setProducts] = useState([])
     const [selectedStars, setSelectedStars] = useState(0);
 
+    // Function to handle the star rating (selcts the number of stars clicked by the user)
     const handleStarClick = (star) => {
         setSelectedStars(star);
     };
 
+    // Function to handle the submission of the review
     const handleSumbit = async () => {
         try {
             axios.put(`http://localhost:8000/rate/${id}`,
@@ -24,6 +29,7 @@ const User = () => {
         }
     }
 
+    // UseEffect to get the user's information and products
     useEffect(() => {
         const getAccountInfo = async () => {
             try {
@@ -53,6 +59,7 @@ const User = () => {
                     <h2 className="pb-[8px] text-3xl font-semibold">Profile</h2>
                     <h2 className='text-xl'>User reviews:</h2>
                     <div className="pb-[4px] text-2xl">
+                        {/* Map Five stars to show user's rating */}
                         {[...Array(5)].map((_, index) => (
                             <span
                                 key={index}
@@ -65,6 +72,7 @@ const User = () => {
                     <h2 className="pb-[8px]">Username: {user.username}</h2>
                     <h2 className="pb-[8px]">Email: {user.email}</h2>
                     <>
+                        {/* Only lets a review rendered if user is logged in (has a token) */}
                         {localStorage.getItem('token') && (
                             <>
                                 <h2 className='pb-[2px] text-2xl font-semibold'>Leave a Review:</h2>
@@ -75,7 +83,7 @@ const User = () => {
                                             style={{ cursor: 'pointer', color: index < selectedStars ? 'gold' : 'gray' }}
                                             onClick={() => handleStarClick(index + 1)}
                                         >
-                                            &#9733;
+                                            &#9733; {/* Unicode for star*/}
                                         </span>
                                     ))}
                                     <br />
@@ -88,6 +96,7 @@ const User = () => {
 
                 </div>
             </div>
+            {/* A users products */}
             <div className="flex h-[] w-[300px] flex-col rounded-lg bg-teal-500 p-3">
                 <h2 className="pb-[4px] text-xl font-semibold">Products:</h2>
                 <div className="flex flex-col">

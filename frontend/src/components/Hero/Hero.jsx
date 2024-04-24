@@ -3,6 +3,7 @@ import './Hero.css';
 import arrow_icon from '../../components/Assets/arrow.png';
 import { Link } from 'react-router-dom';
 
+
 export const Hero = () => {
   return (
     <div className='hero'>

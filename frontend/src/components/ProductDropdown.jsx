@@ -6,6 +6,7 @@ const ProductDropdown = ({ offeredProduct }) => {
     const [selectedProduct, setSelectedProduct] = useState({});
     const [displayProduct, setDisplayProduct] = useState({});
 
+    // Fetch all products from the server when the component mounts
     useEffect(() => {
         const getProducts = async () => {
             try {
@@ -19,6 +20,7 @@ const ProductDropdown = ({ offeredProduct }) => {
         getProducts()
     }, [])
 
+    // Fetch the product details when a product is selected
     const getProduct = async (selectedProduct) => {
         try {
             const res = await axios.get(`http://localhost:8000/product/${selectedProduct}`,
@@ -64,6 +66,7 @@ const ProductDropdown = ({ offeredProduct }) => {
         }
     }
 
+    // Return the product dropdown
     return (
         <div className='flex flex-row gap-2'>
             <div className='pt-2'>

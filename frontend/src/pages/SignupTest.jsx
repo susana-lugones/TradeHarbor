@@ -4,6 +4,7 @@ import axios from 'axios'
 import './CSS/LoginSignup.css'
 
 export const SignupTest = () => {
+  // States used for registering a user
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -11,6 +12,7 @@ export const SignupTest = () => {
   const navigate = useNavigate()
 
   const handleRegister = (event) => {
+    // Prevent the default form submission and post a new user in the DB
     event.preventDefault()
     axios.post('http://localhost:8000/register', {
         email: email,
@@ -18,6 +20,7 @@ export const SignupTest = () => {
         password: password
     })
     .then(() => {
+      // If the user is registered, alert the user and reset the input fields
         alert('User Registered')
         setEmail('')
         setUsername('')

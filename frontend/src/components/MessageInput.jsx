@@ -4,16 +4,17 @@ import axios from 'axios'
 import useConversation from '../zustand/useConversation'
 
 const MessageInput = () => {
-    
+    // States to hold the message and loading state
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(false)
     const { messages, setMessages, selectedConversation } = useConversation()
     
-
+    // Function to send a message
     const sendMessage = async (message) => {
         setLoading(true)
 
         try {
+            // Send a POST request to the server to send a message
             const res = await axios.post(`http://localhost:8000/sendmessage/${selectedConversation._id}`, {'message':message, 'offer': false}, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
             const data = await res.data
             if (data.error) {
@@ -27,6 +28,7 @@ const MessageInput = () => {
         }
     }
 
+    // Function to handle the form submission
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!message) return
@@ -34,6 +36,7 @@ const MessageInput = () => {
         setMessage('')
     }
 
+    // Render the message input form
     return (
         <div className='px-4 my-3'>
             <div className='w-full relative'>

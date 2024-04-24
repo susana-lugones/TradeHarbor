@@ -1,6 +1,9 @@
 import React from 'react'
 import './DescriptionBox.css'
 
+// DescriptionBox component to display the description of a product
+// Hardcoded but can be replaced with data from an api call GET request of the product description
+
 export const DescriptionBox = () => {
   return (
     <div className='descriptionbox'>

@@ -1,6 +1,7 @@
 import React from 'react'
 
 const MessageSkeleton = () => {
+	// Skeleton UI for a message, used for loading state
   return (
 		<>
 			<div className='flex gap-3 items-center'>

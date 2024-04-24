@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+
 const LoginTest = () => {
     
     const [username, setUsername] = useState('')
@@ -9,11 +10,17 @@ const LoginTest = () => {
 
     const navigate = useNavigate()
 
+    /**
+     * Handles the login process when the user clicks the "Continue" button
+     */
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
+            // Send a POST request to the server with the username and password
             const response = await axios.post('http://localhost:8000/login', { username, password })
+            // Get the token from the response and store it in the local storage
             const token = response.data.token
+            // Reset states and navigate to the home page
             setUsername('')
             setPassword('')
             navigate('/')

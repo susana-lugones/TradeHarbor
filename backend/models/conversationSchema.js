@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Conversation Schema for the Database
 const conversationSchema = new mongoose.Schema({
     participants: [
         {
@@ -16,6 +17,7 @@ const conversationSchema = new mongoose.Schema({
     ]
 }, {timestamps: true})
 
+// Create a model for the schema and export it
 const Conversation = mongoose.model('Conversation', conversationSchema)
 
 module.exports = Conversation
