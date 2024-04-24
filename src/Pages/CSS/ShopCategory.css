@@ -30,9 +30,13 @@
     width: 233px;
     height: 69px;
     border-radius: 75px;
-    background: #ededed;
-    color: #787878;
+    background: #025f99;
+    color: white;
     font-size: 18px;
     font-weight: 500;
 
+}
+
+.shopcategory-loadmore:hover{
+    color: #01b3a7;
 }
