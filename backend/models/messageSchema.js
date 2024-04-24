@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Schema for messages
 const messageSchema = new mongoose.Schema({
     senderId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -21,6 +22,7 @@ const messageSchema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
+// Create a model for the schema and export it
 const Message = mongoose.model('Message', messageSchema)
 
 module.exports = Message

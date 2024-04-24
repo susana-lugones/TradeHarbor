@@ -3,6 +3,8 @@ import p11_img from "../../../public/images/11.jpg";
 import p20_img from "../../../public/images/20.jpg";
 import p27_img from "../../../public/images/27.jpg";
 
+// Hardcoded products for related products
+
 let data_product = [
   {
     id: 1,

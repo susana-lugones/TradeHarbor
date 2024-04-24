@@ -31,6 +31,8 @@ import p30_img from "./30.jpg";
 import p31_img from "./31.jpg";
 import p32_img from "./32.jpg";
 
+// Hardcoded products for testing
+
 let all_product = [
   {
     id: 1,

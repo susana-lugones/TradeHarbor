@@ -2,6 +2,7 @@ import React from 'react'
 import './Item.css'
 import { Link } from 'react-router-dom'
 
+// Item component to display a single product, only image, name and price
 export const Item = (props) => {
   return (
     <div className='item'>

@@ -1,19 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import logo from '../Assets/TradeHarborLogo.png';
-import cart_icon from '../Assets/cart_icon.png';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa6";
-import { CiSquarePlus } from 'react-icons/ci'
 import useConversation from '../../zustand/useConversation';
 
 // import { ShopContext } from '../../Context/ShopContext';
 
 export const Navbar = () => {
+  // State to hold the sidebar open/close state and global setSelectedConversation
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { setSelectedConversation } = useConversation()
-  // const { getTotalCartItems } = useContext(ShopContext);
 
+  // Function to handle signout
   const handleSignout = () => {
       localStorage.removeItem('token')
       setSelectedConversation(null)
@@ -21,6 +20,7 @@ export const Navbar = () => {
       navigate('/login')
   }
 
+  // Render the top navbar and the side navbar
   return (
     <>
       <div className="top-navbar">

@@ -4,7 +4,7 @@ import footer_logo from '../../components/Assets/TradeHarborLogo.png'
 
 import { Link } from 'react-router-dom';
 
-
+// Footer component to display the footer of the website
 export const Footer = () => {
   return (
     <div className='footer'>

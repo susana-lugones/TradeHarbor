@@ -3,10 +3,12 @@ import axios from 'axios'
 import { extractTime } from '../utils/extractTime'
 
 const Message = ({ message }) => {
+  // State to hold the viewing user
   const [viewingUser, setViewingUser] = useState('')
   const [loading, setLoading] = useState(false)
   const formattedTime = extractTime(message.createdAt)
 
+  // Fetch the viewing user when the component mounts
   useEffect(() => {
     const getUser = async () => {
 
@@ -24,6 +26,7 @@ const Message = ({ message }) => {
     getUser()
   }, [])
 
+  // Set loading state to true when the senderId and viewingUser are available
   useEffect(() => {
     setLoading(true)
     if (message.senderId && viewingUser) {
@@ -31,6 +34,7 @@ const Message = ({ message }) => {
     }
   }, [message.senderId, viewingUser])
 
+  // Function to handle the accept offer button
   const handleAccept = async () => {
     try {
       await axios.delete(`http://localhost:8000/acceptoffer/${message._id}`,
@@ -48,6 +52,7 @@ const Message = ({ message }) => {
     }
   }
 
+  // Function to handle the decline offer button
   const handleDecline = async () => {
     try {
       await axios.delete(`http://localhost:8000/declineoffer/${message._id}`,
@@ -65,9 +70,11 @@ const Message = ({ message }) => {
     }
   }
 
+  // Conditional class for chat bubbles
   const chatEnd = message.senderId === viewingUser ? 'chat-end' : ''
   const bubbleBgColor = message.senderId === viewingUser ? "bg-teal-500" : "";
 
+  // Render the message and optionally the accept and decline if the message is an offer
   return (
     <div>
       {!loading && <div>

@@ -4,11 +4,13 @@ import './NewCollections.css'
 import Item from '../../components/Item/Item'
 
 export const NewCollections = () => {
-
+  // State to hold the list of products
   const [productList, setProductList] = useState([])
 
+  // Function to fetch the products from the server
   const fetchProducts = async () => {
     try {
+      // Send a GET request to the server to get all products
       const { data } = await axios.get('http://localhost:8000/allproducts')
       setProductList(data)
     } catch (error) {
@@ -16,10 +18,12 @@ export const NewCollections = () => {
     }
   }
 
+  // Fetch the products when the component mounts
   useEffect(() => {
     fetchProducts()
   }, [])
 
+  // Display the new products
   return (
     <div className='new-collections'>
         <h1>Recent Products Added</h1>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 const CreateProduct = () => {
+  // State to hold product info from the the form
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -9,19 +10,20 @@ const CreateProduct = () => {
     price_range: ''
   });
 
-  //const [token, setToken] = useState(''); // State to hold the authorization token
-
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Send a POST request to the server with the product data
       const response = await axios.post('http://localhost:8000/newproduct', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}` // Include the token in the Authorization header
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
       console.log('Product created:', response.data);
@@ -37,6 +39,7 @@ const CreateProduct = () => {
     }
   };
 
+  // Render the form
   return (
     <div className='flex flex-grow justify-center items-center bg-[#ececec] text-gray-800'>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-4 bg-teal-400 rounded-md'>

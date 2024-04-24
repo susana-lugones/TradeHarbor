@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const Account = () => {
 
+  // States used for account information and buttons for conditional rendering
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [userButtonClicked, setUserButtonClicked] = useState(false)
@@ -16,16 +17,20 @@ const Account = () => {
 
   const navigate = useNavigate()
 
+  // Function to fetch account information
   const fetchAccount = async () => {
+    // Send a GET request to the server to get the account information
     const response = await axios.get('http://localhost:8000/accountinfo', {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
+    // Set the account information to the states
     setUsername(response.data.username)
     setEmail(response.data.email)
   }
 
+  // Functions to handle the button clicks and input changes
   const handleUserClick = () => {
     setUserButtonClicked(true)
     setEmailButtonClicked(false)
@@ -48,8 +53,10 @@ const Account = () => {
     setUsernameInput(event.target.value)
   }
 
+  // Function to handle the username change
   const handleUserSubmit = () => {
     console.log(usernameInput)
+    // Send a PATCH request to the server with the new username
     axios.patch('http://localhost:8000/editusername',
       {
         username: usernameInput
@@ -59,6 +66,7 @@ const Account = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       }).then((response) => {
+        // Fetch the account information and reload the page
         fetchAccount()
         window.location.reload()
         setUserButtonClicked(false)
@@ -74,6 +82,7 @@ const Account = () => {
 
   const handleEmailSubmit = async () => {
     console.log(emailInput)
+    // Send a PATCH request to the server with the new email
     axios.patch('http://localhost:8000/editemail',
       {
         email: emailInput
@@ -83,6 +92,7 @@ const Account = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       }).then((response) => {
+        // Fetch the account information and reload the page
         fetchAccount()
         window.location.reload()
         setEmailButtonClicked(false)
@@ -95,7 +105,7 @@ const Account = () => {
   }
 
   const handlePasswordSubmit = () => {
-    console.log(passwordInput)
+    // Send a PATCH request to the server with the new password
     axios.patch('http://localhost:8000/editpassword',
       {
         password: passwordInput
@@ -105,32 +115,37 @@ const Account = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
+      // No rendering of the password because the password is hashed so cannot be returned from the DB
     setPasswordButtonClicked(false)
     setPasswordInput('')
   }
 
   const handleDeleteAccount = () => {
+    // Send a DELETE request to the server to delete the account
     axios.delete('http://localhost:8000/deleteaccount',
       {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
-
+    // Remove the token from the local storage and navigate to the login page
     localStorage.removeItem('token')
     navigate('/login')
   }
 
   const handleDeleteProduct = async (id) => {
     try {
+      // Send a DELETE request to the server to delete the product
       await axios.delete(`http://localhost:8000/delete/${id}`,
       {headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}})
+      // Alert the user that the product has been deleted
       alert('Product Deleted')
     } catch (error) {
       console.log(error)
     }
   }
 
+  // Fetch the products when the page loads and when the products array is modified
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -148,6 +163,7 @@ const Account = () => {
     getProducts()
   }, [products])
 
+  // Render the account page
   return (
     <div className="flex flex-grow flex-col gap-3 w-full items-center justify-center bg-[#ececec] text-gray-800">
       <div className="flex h-[] w-[300px] flex-col rounded-lg bg-teal-500">

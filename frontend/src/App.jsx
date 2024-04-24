@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
+
+// Import for all components to be used in the app via react-router-dom
 import Navbar from './components/Navbar/Navbar'
 import Account from './pages/Account'
 
@@ -20,6 +22,7 @@ import ShopCategory from './pages/ShopCategory'
 
 function App() {
 
+  // The account and create product page cannot be accessed unless the user is signed in
   const isUserSignedIn = !!localStorage.getItem('token')
 
   return (

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import './CSS/ContactUs.css';
 
+/**
+ * ContactUs is not implemented, could be used to send a message to the TradeHarbor team
+ */
+
 const ContactUs = () => {
+  // States used for the contact form
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
 
+  // Function to handle the form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Form submitted', { name, email, phone, message });
@@ -17,6 +23,7 @@ const ContactUs = () => {
     setMessage('');
   };
 
+  // Render the contact form
   return (
     <div className="contact-page-container">
       <div className="contact-form-container">

@@ -1,6 +1,7 @@
 import React from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
 
+// Not implemented in the current version of the app, use a GET request to search for inputted user
 const SearchInput = () => {
   return (
     <form className='flex items-center gap-2'>

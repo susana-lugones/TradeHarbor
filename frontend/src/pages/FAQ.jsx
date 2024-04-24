@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import './CSS/FAQ.css';
 import { useNavigate  } from 'react-router-dom';
 
+/**
+ * FAQItem component represents a single FAQ item with a title and content.
+ * Uses a state to toggle the visibility of the content.
+ */
 const FAQItem = ({ title, content }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -17,11 +21,14 @@ const FAQItem = ({ title, content }) => {
 };
 
 const FAQ = () => {
+  // Use the navigate hook to navigate to the contact page
   const navigate = useNavigate();
 
   const handleContactUsClick = () => {
     navigate('/contact'); 
   };
+
+  // Render the FAQ component
 
   return (
     <div className="faq-container">

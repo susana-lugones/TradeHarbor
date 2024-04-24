@@ -3,6 +3,7 @@ import './RelatedProducts.css'
 import data_product from '../../components/Assets/data'
 import Item from '../../components/Item/Item'
 
+// Hard coded data for related products, can be replaced with data from an api call GET request of similar products
 export const RelatedProducts = () => {
   return (
     <div className='relatedproducts'>

@@ -3,14 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './ProductDisplay.css'
 import ProductDropdown from '../../components/ProductDropdown'
-import star_icon from "../../components/Assets/star_icon.png";
-import star_dull_icon from "../../components/Assets/star_dull_icon.png";
+import useConversation from '../../zustand/useConversation'
 
 export const ProductDisplay = (props) => {
   const { product } = props;
   const [message, setMessage] = useState('')
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [loggedInUser, setLoggedInUser] = useState(null)
+  const { setMessages } = useConversation()
 
   const navigate = useNavigate()
 

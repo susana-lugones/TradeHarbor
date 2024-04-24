@@ -5,43 +5,20 @@ import Breadcrum from '../components/Breadcrums/Breadcrum'
 import ProductDisplay from '../components-test/ProductDisplay/ProductDisplay'
 import DescriptionBox from '../components/DescriptionBox/DescriptionBox'
 import RelatedProducts from '../components-test/RelatedProducts/RelatedProducts'
-import ProductDropdown from '../components/ProductDropdown'
 
 const ProductTest = () => {
+  // The id of the product is taken from the URL
   const { id } = useParams()
+  // States used for rendering the product information
   const [product, setProduct] = useState({})
-  const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [loggedInUser, setLoggedInUser] = useState(null)
 
   const navigate = useNavigate()
 
 
-  const sendMessage = async (message) => {
-    setLoading(true)
-
-    try {
-      const res = await axios.post(`http://localhost:8000/sendmessage/${product.owner._id}`, { message }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-      const data = await res.data
-      if (data.error) {
-        throw new Error(data.error)
-      }
-      setMessages([...messages, data])
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-      navigate('/chat')
-    }
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!message) return
-    await sendMessage(message)
-    setMessage('')
-  }
-
+  
+  // Fetch the product information from the API
   const fetchProduct = async () => {
     setLoading(true)
     try {
@@ -55,6 +32,7 @@ const ProductTest = () => {
   }
 
   useEffect(() => {
+    // Fetch the product and the logged in user through useEffect
     const getLoggedInUser = async () => {
       try {
         const response = await axios.get('http://localhost:8000/accountinfo', {
@@ -72,6 +50,7 @@ const ProductTest = () => {
 
   return (
     <div className='flex flex-grow bg-[#ececec] text-gray-800'>
+      {/* If the page is loading display the loading spinner else display the page */}
       {loading ?
         (
           <div className='flex items-center justify-center w-full'>

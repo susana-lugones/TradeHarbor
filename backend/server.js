@@ -10,6 +10,7 @@ const Message = require('./models/messageSchema')
 const Conversation = require('./models/conversationSchema')
 const Offer = require('./models/offerSchema')
 
+// secret key for jwt
 const SECRET_KEY = "secretkey"
 const REFRESH_SECRET_KEY = "refreshsecretkey"
 
@@ -17,8 +18,8 @@ const REFRESH_SECRET_KEY = "refreshsecretkey"
 const app = express()
 
 // connect to mongodb
-
 const mongo_url = 'mongodb+srv://root:root@cluster30.tmgevxw.mongodb.net/UsersDB?retryWrites=true&w=majority'
+
 mongoose.connect(mongo_url)
 .then(() => {
     console.log('Connected to MongoDB')
@@ -29,13 +30,14 @@ mongoose.connect(mongo_url)
     console.log(err)
 })
 
-// middleware
 
+// middleware
 app.use(bodyParser.json())
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+// middleware to authenticate token
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
@@ -49,9 +51,11 @@ function authenticateToken(req, res, next) {
 
 // routes => CRUD API
 
+// POST Request to create a new user
 app.post('/register', async (req, res) => {
     try {
         const {email, username, password} = req.body
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10)
         const newUser = new User({email, username, password: hashedPassword})
         await newUser.save()
@@ -61,6 +65,7 @@ app.post('/register', async (req, res) => {
     }
 })
 
+// GET Request to get all users
 app.get('/register', async (req, res) => {
     try {
         const users = await User.find()
@@ -70,6 +75,7 @@ app.get('/register', async (req, res) => {
     }
 })
 
+// POST Request to login
 app.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body
@@ -89,6 +95,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
+// GET Request to get logged in user's account info
 app.get('/accountinfo', authenticateToken, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId)
@@ -99,6 +106,7 @@ app.get('/accountinfo', authenticateToken, async (req, res) => {
     }
 })
 
+// Get an account of a specific user specified by id
 app.get('/account/:id', async (req, res) => {
     const { id } = req.params
     try {
@@ -109,6 +117,7 @@ app.get('/account/:id', async (req, res) => {
     }
 })
 
+// PATCH Request to edit user's username
 app.patch('/editusername', authenticateToken, async (req, res) => {
     try {
         const { username } = req.body
@@ -121,6 +130,7 @@ app.patch('/editusername', authenticateToken, async (req, res) => {
     }
 })
 
+// PATCH Request to edit user's email
 app.patch('/editemail', authenticateToken, async (req, res) => {
     try {
         const { email } = req.body
@@ -133,6 +143,7 @@ app.patch('/editemail', authenticateToken, async (req, res) => {
     }
 })
 
+// PATCH Request to edit user's password
 app.patch('/editpassword', authenticateToken, async (req, res) => {
     try {
         const { password } = req.body
@@ -145,6 +156,7 @@ app.patch('/editpassword', authenticateToken, async (req, res) => {
     }
 })
 
+// DELETE Request to delete user's account
 app.delete('/deleteaccount', authenticateToken, async (req, res) => {
     try {
         await User.findByIdAndDelete(req.user.userId)
@@ -154,6 +166,7 @@ app.delete('/deleteaccount', authenticateToken, async (req, res) => {
     }
 })
 
+// POST Request to create a new product
 app.post('/newproduct', async (req, res) => {
     try {
         const { name, description, image_url, price_range } = req.body
@@ -169,6 +182,7 @@ app.post('/newproduct', async (req, res) => {
     }
 })
 
+// GET Request to get all products
 app.get('/allproducts', async (req, res) => {
     try {
         const products = await Product.find()
@@ -178,6 +192,7 @@ app.get('/allproducts', async (req, res) => {
     }
 })
 
+// GET Request to get a specific product
 app.get('/product/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
@@ -190,6 +205,7 @@ app.get('/product/:id', async (req, res) => {
     }
 })
 
+// GET Request to get all products of a specific user
 app.get('/owner/:id', async (req, res) => {
     try {
         const owner = await User.findById(req.params.id)
@@ -200,7 +216,6 @@ app.get('/owner/:id', async (req, res) => {
 })
 
 // Send Message Endpoint
-
 app.post('/sendmessage/:id', authenticateToken, async (req, res) => {
     try {
         const { message, offer } = req.body
@@ -238,6 +253,7 @@ app.post('/sendmessage/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// GET request to get all messages for a conversation with id
 app.get('/getmessages/:id', authenticateToken, async (req, res) => {
     try {
         const { id:userToChatId } = req.params
@@ -260,6 +276,7 @@ app.get('/getmessages/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// GET request to get all conversations for a user
 app.get('/users/sidebar', authenticateToken, async (req, res) => {
     try {
         const loggedInUser = req.user.userId;
@@ -273,6 +290,7 @@ app.get('/users/sidebar', authenticateToken, async (req, res) => {
     }
 })
 
+// PUT request to add a rating to a user
 app.put('/rate/:id/', authenticateToken, async (req, res) => {
     try {
         const { rating } = req.body
@@ -287,6 +305,7 @@ app.put('/rate/:id/', authenticateToken, async (req, res) => {
     }
 })
 
+// GET request to get all products for logged in user
 app.get('/user/products', authenticateToken, async (req, res) => {
     try {
         const products = await Product.find({ owner: req.user.userId })
@@ -296,6 +315,7 @@ app.get('/user/products', authenticateToken, async (req, res) => {
     }
 })
 
+// GET request to get all products for a user with id
 app.get('/user/:id/products', async (req, res) => {
     try {
         const { id:userId } = req.params
@@ -306,6 +326,7 @@ app.get('/user/:id/products', async (req, res) => {
     }
 })
 
+// DELETE request to delete a product with id
 app.delete('/delete/:id', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params
@@ -317,6 +338,7 @@ app.delete('/delete/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// POST request to create an offer to a user with id from logged in user
 app.post('/createoffer/:id', authenticateToken, async (req, res) => {
     try {
         const { products, messageId } = req.body
@@ -337,6 +359,7 @@ app.post('/createoffer/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// GET request to get all offers for logged in user
 app.get('/getoffers', authenticateToken, async (req, res) => {
     try {
         const offers = await Offer.find({ $or: [{ receiverId: req.user.userId }, { senderId: req.user.userId }] })
@@ -346,6 +369,7 @@ app.get('/getoffers', authenticateToken, async (req, res) => {
     }
 })
 
+// DELETE request to delete an offer with messageID: id after accepting
 app.delete('/acceptoffer/:id', authenticateToken, async (req, res) => {
     try {
         const { id:messageId } = req.params
@@ -368,6 +392,7 @@ app.delete('/acceptoffer/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// DELETE request to delete an offer with messageID: id after declining, but doesn't delete the products
 app.delete('/declineoffer/:id', authenticateToken, async (req, res) => {
     try {
         const { id:messageId } = req.params
@@ -385,6 +410,7 @@ app.delete('/declineoffer/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// PUT request to update a message with messageID: id
 app.put('/updatemessage/:id', authenticateToken, async (req, res) => {
     try {
         const { id:messageId } = req.params
