@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './CSS/ShopCategory.css'
-import dropdown_icon from '../components-test/Assets/dropdown_icon.png'
-import Item from '../components-test/Item/Item'
+import dropdown_icon from '../components/Assets/dropdown_icon.png'
+import Item from '../components/Item/Item'
 
 export const ShopCategory = () => {
   const [productList, setProductList] = useState([])

@@ -1,45 +1,9 @@
-// import React, { useState, useEffect } from 'react'
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-
-
-// export const ProductTest = () => {
-//   // const {all_product} = useContext(ShopContext);
-//   const [product, setProduct] = useState({});
-//   const { productId } = useParams();
-
-//   const fetchProduct = async () => {
-//     try {
-//       console.log(productId)
-//       const { data } = await axios.get(`http://localhost:8000/product/${productId}`)
-//       setProduct(data)
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-
-//   useEffect(() => {
-//     fetchProduct()
-//   }, [])
-
-//   return (
-//     <div>
-//       <Breadcrum product={product}/>
-//       <ProductDisplay product={product}/>
-//       <DescriptionBox/>
-//       <RelatedProducts/>
-//     </div>
-//   )
-// }
-
-// export default ProductTest
-
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Breadcrum from '../components-test/Breadcrums/Breadcrum'
+import Breadcrum from '../components/Breadcrums/Breadcrum'
 import ProductDisplay from '../components-test/ProductDisplay/ProductDisplay'
-import DescriptionBox from '../components-test/DescriptionBox/DescriptionBox'
+import DescriptionBox from '../components/DescriptionBox/DescriptionBox'
 import RelatedProducts from '../components-test/RelatedProducts/RelatedProducts'
 import ProductDropdown from '../components/ProductDropdown'
 

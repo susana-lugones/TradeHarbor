@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from '../components-test/Hero/Hero'
+import Hero from '../components/Hero/Hero'
 import NewCollections from '../components-test/NewCollections/NewCollections'
 
 export const Shop = () => {

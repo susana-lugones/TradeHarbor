@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './NewCollections.css'
-import Item from '../Item/Item'
+import Item from '../../components/Item/Item'
 
 export const NewCollections = () => {
 

@@ -1,22 +1,22 @@
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import Navbar from './components-test/Navbar/Navbar'
+import Navbar from './components/Navbar/Navbar'
 import Account from './pages/Account'
 
 import CreateProduct from './pages/CreateProduct'
 import AboutUs from './pages-test/AboutUs'
 import Chat from './pages/Chat'
 import User from './pages/User'
-import Footer from './components-test/Footer/Footer'
+import Footer from './components/Footer/Footer'
 
-import SignupTest from './pages-test/SignupTest'
-import LoginTest from './pages-test/Login'
-import Shop from './pages-test/Shop'
-import ProductTest from './pages-test/Product'
-import Testimonials from './pages-test/Testimonials'
-import FAQ from './pages-test/FAQ'
-import ContactUs from './pages-test/ContactUs'
-import ShopCategory from './pages-test/ShopCategory'
+import SignupTest from './pages/SignupTest'
+import LoginTest from './pages/Login'
+import Shop from './pages/Shop'
+import ProductTest from './pages/Product'
+import Testimonials from './pages/Testimonials'
+import FAQ from './pages/FAQ'
+import ContactUs from './pages/ContactUs'
+import ShopCategory from './pages/ShopCategory'
 
 function App() {
 

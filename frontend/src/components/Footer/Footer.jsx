@@ -1,6 +1,6 @@
 import React from 'react'
 import './Footer.css'
-import footer_logo from '../Assets/TradeHarborLogo.png'
+import footer_logo from '../../components/Assets/TradeHarborLogo.png'
 
 import { Link } from 'react-router-dom';
 

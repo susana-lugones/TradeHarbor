@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './ProductDisplay.css'
 import ProductDropdown from '../../components/ProductDropdown'
-import star_icon from "../Assets/star_icon.png";
-import star_dull_icon from "../Assets/star_dull_icon.png";
+import star_icon from "../../components/Assets/star_icon.png";
+import star_dull_icon from "../../components/Assets/star_dull_icon.png";
 
 export const ProductDisplay = (props) => {
   const { product } = props;
