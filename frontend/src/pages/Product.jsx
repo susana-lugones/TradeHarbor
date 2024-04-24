@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Breadcrum from '../components/Breadcrums/Breadcrum'
+import ProductDisplay from '../components-test/ProductDisplay/ProductDisplay'
+import DescriptionBox from '../components/DescriptionBox/DescriptionBox'
+import RelatedProducts from '../components-test/RelatedProducts/RelatedProducts'
 import ProductDropdown from '../components/ProductDropdown'
 
-const Product = () => {
+const ProductTest = () => {
   const { id } = useParams()
   const [product, setProduct] = useState({})
   const [message, setMessage] = useState('')
@@ -54,7 +58,8 @@ const Product = () => {
     const getLoggedInUser = async () => {
       try {
         const response = await axios.get('http://localhost:8000/accountinfo', {
-          headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
         await setLoggedInUser(response.data._id)
       }
       catch (error) {
@@ -73,28 +78,15 @@ const Product = () => {
             <div className='loading loading-spinner'></div>
           </div>
         ) : (
-          <div className='flex flex-col items-center justify-center w-full'>
-            <img
-              src={product.image_url}
-              alt={product.name}
-              className='w-auto h-auto object-cover'
-            />
-            <h1 className='text-3xl font-semibold'>{product.name}</h1>
-            <p className='text-sm'>{product.description}</p>
-            <Link to={`/user/${product.owner ? product.owner._id : ''}`}><p className='text-sm'>{product.owner ? product.owner.username : ''}</p></Link>
-            <p className='text-lg font-semibold'>${product.price_range}</p>
-            {localStorage.getItem('token') && product.owner && product.owner._id !== loggedInUser && (
-              <>
-                <textarea className='p-2 bg-zinc-200 rounded-lg' placeholder='Send a Message...' onChange={(e) => setMessage(e.target.value)} value={message} />
-                <button onClick={handleSubmit} className='bg-teal-500 text-white rounded-md p-2 mt-2'>Message Seller</button>
-                <ProductDropdown offeredProduct={product} />
-              </>
-            )}
-            <Link to='/products' className='absolute bottom-20 text-gray-800 bg-teal-500 rounded-md p-2'>Back to Products</Link>
+          <div>
+            <Breadcrum product={product} />
+            <ProductDisplay product={product} />
+            <DescriptionBox />
+            <RelatedProducts />
           </div>
         )}
     </div>
   )
 }
 
-export default Product
+export default ProductTest

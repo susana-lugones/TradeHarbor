@@ -65,22 +65,16 @@ const ProductDropdown = ({ offeredProduct }) => {
     }
 
     return (
-        <div className='flex flex-row gap-3'>
+        <div className='flex flex-row gap-2'>
             <div className='pt-2'>
                 <select onChange={(e) => handleSelectChange(e.target.value)} className='rounded-md'>
-                    <option value="">Select a component</option>
+                    <option value="">Select a Product to Trade</option>
                     {products && products.map(product => (
                         <option key={product._id} value={product._id}>{product.name},  ${product.price_range}</option>
                     ))}
                 </select>
-                <div>
-                    {/* Render the selected product */}
-                    {selectedProduct !== '' && (
-                        <p>You Selected: {displayProduct.name}</p>
-                    )}
-                </div>
             </div>
-            <button className='bg-teal-500 text-white rounded-md p-2 mt-2 h-10' onClick={handleSubmit}>Make Offer</button>
+            <button className='bg-teal-500 text-white rounded-md p-2 mt-2 h-[60%]' onClick={handleSubmit}>Make Offer</button>
         </div>
     )
 }

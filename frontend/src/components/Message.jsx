@@ -44,7 +44,7 @@ const Message = ({ message }) => {
     } catch (error) {
       console.error(error)
     } finally {
-      window.location.reload(forceReload = false)
+      window.location.reload()
     }
   }
 
@@ -61,7 +61,7 @@ const Message = ({ message }) => {
     } catch (error) {
       console.error(error)
     } finally {
-      window.location.reload(forceReload = false)
+      window.location.reload()
     }
   }
 
