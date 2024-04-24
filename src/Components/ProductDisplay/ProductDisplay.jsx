@@ -23,7 +23,7 @@ export const ProductDisplay = (props) => {
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
           <img src={star_dull_icon} alt="" />
-          <p>(122)</p>
+          <p>(100)</p>
         </div>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">${product.old_price}</div>
