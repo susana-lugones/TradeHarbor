@@ -39,7 +39,7 @@ const CreateProduct = () => {
 
   return (
     <div className='flex flex-grow justify-center items-center bg-[#ececec] text-gray-800'>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-4 bg-teal-500 rounded-md'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-4 bg-teal-400 rounded-md'>
         <h1 className='text-3xl font-semibold'>Create Product</h1>
         <div>
           {/* <label>Name:</label> */}
@@ -58,7 +58,7 @@ const CreateProduct = () => {
           <input className='p-2 bg-zinc-200 rounded-lg' placeholder='Price Range' type="text" name="price_range" value={formData.price_range} onChange={handleChange} />
         </div>
         
-        <button className='p-2 bg-[#ececec] hover:bg-zinc-200 rounded-lg' type="submit">Create Product</button>
+        <button className='p-2 bg-teal-500 hover:bg-teal-600 rounded-lg text-gray-800' type="submit">Create Product</button>
       </form>
     </div>
   );
