@@ -31,7 +31,7 @@
 .faq-button {
   font-size: 18px;
   font-weight: bold;
-  background-color: #01CABD;
+  background-color: #364591;
   color: #0d1117;
   border: none;
   padding: 20px 30px;
@@ -48,7 +48,7 @@
 }
 
 .faq-item {
-  background-color: #01CABD;
+  background-color: #364591;
   color: white;
   margin-bottom: 10px;
   border-radius: 6px;
@@ -61,7 +61,7 @@
 }
 
 .faq-item:hover {
-  background-color: #01b3a7;
+  background-color: #01CABD;
 }
 
 .faq-item-title {

@@ -33,7 +33,7 @@
     height: 70px;
     border-radius: 75px;
     margin-top: 30px;
-    background: #01CABD;
+    background: #364591;
     color: white;
     font-size: 22px;
     font-weight: 500;
@@ -48,5 +48,5 @@
 }
 
 .hero-latest-btn:hover {
-    background: #01b3a7;
+    background: #01CABD;
 }

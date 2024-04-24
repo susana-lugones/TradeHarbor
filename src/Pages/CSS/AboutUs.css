@@ -1,36 +1,68 @@
 .about-container {
-    font-family: 'Arial', sans-serif;
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-    color: #333;
+  font-family: 'Arial', sans-serif;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  color: #333;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.about-header {
+  text-align: center;
+  padding: 30px 0;
+  background-color: #f7f7f7; 
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.about-header h1 {
+  font-size: 36px;
+  color: #025f99;
+  margin-bottom: 10px;
+}
+
+.about-header p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.about-section {
+  padding: 15px 0;
+  border-bottom: 1px solid #eaeaea; 
+}
+
+.about-section:last-child {
+  border-bottom: none;
+}
+
+.about-section h2 {
+  font-size: 24px;
+  color: #025f99;
+  margin: 20px 0 10px;
+}
+
+.about-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+@media (min-width: 768px) {
+  .about-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
   }
-  
-  .about-header {
-    text-align: center;
-    margin-bottom: 30px;
+
+  .about-section h2 {
+    flex-basis: 20%;
   }
-  
-  .about-header h1 {
-    font-size: 36px;
-    color: #025f99;
+
+  .about-section p {
+    flex-basis: 75%;
   }
-  
-  .about-header p {
-    font-size: 18px;
-    color: #666;
-  }
-  
-  .about-content h2 {
-    font-size: 28px;
-    color: #333;
-    margin-top: 20px;
-  }
-  
-  .about-content p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #666;
-    margin-top: 10px;
-  }
-  
+}

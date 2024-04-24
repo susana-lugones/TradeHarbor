@@ -48,17 +48,19 @@ function App() {
 
 function Explore() {
   return (
-    <div>
-      <h1>Recent Searches</h1>
-      <ul>
-        <li><a href="/mens">Men</a></li>
-        <li><a href="/womens">Women</a></li>
-        <li><a href="/kids">Kids</a></li>
-        <li><a href="/watches">Watches</a></li>
-        <li><a href="/glasses">Glasses</a></li>
-        <li><a href="/skirts">Skirts</a></li>
-        <li><a href="/shoes">Shoes</a></li>
-      </ul>
+    <div className='explore-container'>
+    <div className='recent-searches-container'>
+      <h1 className='recent-searches-title'>Recent Searches</h1>
+      <div className='recent-searches-list'>
+        <a className='search-link' href="/mens">Men</a>
+        <a className='search-link' href="/womens">Women</a>
+        <a className='search-link' href="/kids">Kids</a>
+        <a className='search-link' href="/watches">Watches</a>
+        <a className='search-link' href="/glasses">Glasses</a>
+        <a className='search-link' href="/skirts">Skirts</a>
+        <a className='search-link' href="/shoes">Shoes</a>
+      </div>
+    </div>
       <Routes>
         <Route path='/mens' element={<ShopCategory category="men"/>}/>
         <Route path='/womens' element={<ShopCategory category="women"/>}/>

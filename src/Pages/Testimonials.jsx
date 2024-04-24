@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import './CSS/Testimonials.css'; // Ensure to create this CSS file
+import './CSS/Testimonials.css';
 
 const testimonials = [
   { id: 1, quote: "TradeHarbor has revolutionized the way we think about trading. The platform is user-friendly and incredibly efficient.", author: "Jane Doe, Entrepreneur" },
   { id: 2, quote: "Thanks to TradeHarbor, we can exchange goods with others who value our products as much as we do.", author: "John Smith, Small Business Owner" },
-  { id: 3, quote: "TradeHarbor provides an excellent platform for trading items without the need for cash transactions. It's seamless and straightforward.", author: "Sarah Lee, Freelancer" }
+  { id: 3, quote: "TradeHarbor provides an excellent platform for trading items without the need for cash transactions. It's seamless and straightforward.", author: "Sarah Lee, Freelancer" },
+  { id: 4, quote: "I've met so many amazing traders on TradeHarbor. It's a community as much as it is a marketplace.", author: "Miguel Sanchez, Collector" },
+  { id: 5, quote: "As an artist, TradeHarbor has allowed me to trade my art for wonderful treasures. It's a unique experience.", author: "Alicia Yoon, Artist" },
 ];
 
 const Testimonials = () => {

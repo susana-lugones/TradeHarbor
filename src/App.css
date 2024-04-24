@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+.recent-searches-container {
+  margin: 1rem auto;
+  padding: 0 1rem;
+  max-width: calc(100% - 2rem);
+  box-sizing: border-box; 
+}
+
+.explore-container {
+  padding: 0 1rem;
+}
+
+.recent-searches-title {
+  margin-right: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.recent-searches-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem; 
+  border-radius: 8px;
+}
+
+.search-link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 4px; 
+  transition: background-color 0.3s ease; 
+}
+
+.search-link:hover {
+  background-color: #e2e6ea;
+}

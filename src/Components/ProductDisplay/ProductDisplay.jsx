@@ -18,6 +18,8 @@ export const ProductDisplay = (props) => {
       <div className="productdisplay-right">
         <h1>{product.name}</h1>
         <div className="productdisplay-right-stars">
+        <p className="productdisplay-right-reviews-title">Seller Reviews</p>
+        <div className="productdisplay-right-stars-icons">
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
@@ -25,6 +27,7 @@ export const ProductDisplay = (props) => {
           <img src={star_dull_icon} alt="" />
           <p>(100)</p>
         </div>
+      </div>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">${product.old_price}</div>
           <div className="productdisplay-right-price-new">${product.new_price}</div>
