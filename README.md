@@ -1,8 +1,8 @@
-# CEN3031 Project
+# TradeHarbor
 
 This project was created with MongoDB, ExpressJS, React(Vite), Node.js, and TailwindCSS
 
-## Team 118
+## Contributors
 - Oscar Camargo
 - Charles Cone
 - Susana Lugones
